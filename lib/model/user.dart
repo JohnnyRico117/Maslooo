@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class User {
   String bday;
   int points;
@@ -34,13 +33,4 @@ class User {
       veryHappy: snap.data.containsKey('veryHappyImage') ? snap.data['veryHappyImage'] : ''
   );
 
-//  User.fromMap(Map<String, dynamic> data, String id)
-//      : this(
-//          id: id,
-//          name: data['name'],
-//          //type: UserType.values[data['type']],
-//          //points: data['points'],
-//          //todolists: new List<String>.from(data['todolists']),
-//          //happyImages: new List<String>.from(data['happyImages'])
-//  );
 }

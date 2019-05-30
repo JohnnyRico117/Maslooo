@@ -14,7 +14,6 @@ ThemeData buildTheme() {
         fontSize: 15.0,
         color: const Color(0xFF807A6B),
       ),
-      // Used for the recipes' duration:
       caption: base.caption.copyWith(
         color: const Color(0xFFCCC5AF),
       ),
