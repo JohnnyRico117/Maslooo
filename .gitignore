@@ -21,7 +21,6 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
-.flutter-plugins
 .packages
 .pub-cache/
 .pub/
@@ -48,7 +47,6 @@
 **/ios/**/.vagrant/
 **/ios/**/DerivedData/
 **/ios/**/Icon?
-**/ios/**/Pods/
 **/ios/**/.symlinks/
 **/ios/**/profile
 **/ios/**/xcuserdata
