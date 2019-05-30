@@ -26,8 +26,8 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               _buildAvatar(),
               _buildUserInfo(),
-              //_buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/temp'),
-              //_buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/tasklist'),
+              _buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
+              _buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
               //_buildCards("Settings", Icons.settings, '/settings')
             ],
           ),
@@ -103,6 +103,48 @@ class _ProfileState extends State<Profile> {
             )
           ],
         )
+    );
+  }
+
+  Widget _buildCards(String title, IconData icon, String route) {
+    Card _buildCard() {
+      return Card(
+        elevation: 8.0,
+        margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 6.0),
+        child: Container(
+          decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+          child: ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20.0, vertical: 1.0),
+              leading: Icon(icon, color: Colors.white),
+
+              title: Text(
+                title,
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+
+              trailing:
+              Icon(Icons.keyboard_arrow_right, color: Colors.white, size: 30.0)
+          ),
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: () => Navigator.pushNamed(context, route),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        child: Card(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildCard(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

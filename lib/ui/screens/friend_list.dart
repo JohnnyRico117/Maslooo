@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:maslooo_app/model/state.dart';
 import 'package:maslooo_app/state_widget.dart';
-
+import 'package:maslooo_app/ui/screens/add_friend.dart';
 import 'package:maslooo_app/ui/widgets/loading_indicator.dart';
 
 class FriendList extends StatefulWidget {
@@ -44,9 +44,9 @@ class _FriendListState extends State<FriendList> {
           ListTile(
             leading: new FloatingActionButton(
                 onPressed: () {
-//                  Navigator.push(context,
-//                    MaterialPageRoute(builder: (context) => AddFriend()),
-//                  );
+                  Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddFriend()),
+                  );
                 },
                 child: Icon(Icons.add)
             ),
