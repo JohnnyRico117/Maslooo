@@ -2,6 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:maslooo_app/model/state.dart';
 import 'package:maslooo_app/state_widget.dart';
@@ -18,7 +21,7 @@ import 'package:maslooo_app/ui/screens/profile_setup.dart';
 //import 'package:contacts_service/contacts_service.dart';
 
 //import 'package:flutter_sms/flutter_sms.dart';
-//import 'package:firebase_messaging/firebase_messaging.dart';
+
 
 
 class HomeScreen extends StatefulWidget {
@@ -32,7 +35,7 @@ class HomeScreenState extends State<HomeScreen> {
   File _image;
   FirebaseStorage _storage = FirebaseStorage.instance;
 
-  //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,30 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) {
+        print('on message $message');
+      },
+      onResume: (Map<String, dynamic> message) {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) {
+        print('on launch $message');
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true));
+//    _firebaseMessaging.getToken().then((token){
+//      _updateToken(token);
+//    });
   }
+  
+//  void _updateToken(token) {
+//    print("TOKEN: " + token);
+//    DatabaseReference ref = new FirebaseDatabase().reference();
+//    ref.child('fcm-token/${token}').set({"token":token});
+//
+//  }
 
   Widget _buildContent() {
     if (appState.isLoading) {

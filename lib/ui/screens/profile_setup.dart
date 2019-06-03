@@ -69,15 +69,16 @@ class ProfileSetUpState extends State<ProfileSetUp> {
                           child: Text('Back!'),
                         ),
                         RaisedButton(
+                          // TODO: Token
                           onPressed: () {
-                            Firestore.instance.collection('users').document(appState.user.uid).setData(
-                                {'id': appState.user.uid,
-                                  'username': appState.user.displayName,
-                                  'userpic': appState.user.photoUrl,
-                                  'birthday': _birthday,
-                                  'likes': _likes,
-                                  'points': 0
-                                });
+                            Firestore.instance.collection('users').document(appState.user.uid).setData({
+                              'id': appState.user.uid,
+                              'username': appState.user.displayName,
+                              'userpic': appState.user.photoUrl,
+                              'birthday': _birthday,
+                              'likes': _likes,
+                              'points': 0
+                            });
 
 //                            Firestore.instance.collection('users').document(appState.user.uid).updateData(
 //                                {'birthday': _birthday, 'likes': _likes});

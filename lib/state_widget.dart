@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:maslooo_app/model/state.dart';
 import 'package:maslooo_app/model/user.dart';
@@ -34,6 +36,8 @@ class _StateWidgetState extends State<StateWidget> {
   StateModel state;
   GoogleSignInAccount googleAccount;
   final GoogleSignIn googleSignIn = new GoogleSignIn();
+  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
+  String usertoken;
 
   @override
   void initState() {
@@ -44,7 +48,11 @@ class _StateWidgetState extends State<StateWidget> {
       state = new StateModel(isLoading: true);
       initUser();
     }
+    _firebaseMessaging.getToken().then((token){
+      usertoken = token;
+    });
   }
+
 
   Future<Null> initUser() async {
     googleAccount = await getSignedInAccount(googleSignIn);
@@ -96,7 +104,12 @@ class _StateWidgetState extends State<StateWidget> {
           'userpic': firebaseUser.photoUrl,
           //'birthday': _birthday,
           //'likes': _likes,
-          'points': 0
+          'points': 0,
+          'token': usertoken
+        });
+      } else {
+        Firestore.instance.collection('users').document(firebaseUser.uid).updateData({
+          'token': usertoken
         });
       }
 

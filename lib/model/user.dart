@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
+  String id;
   String bday;
   int points;
   String likes;
@@ -11,6 +12,7 @@ class User {
   String veryHappy;
 
   User({
+    this.id,
     this.bday,
     this.points,
     this.likes,
@@ -23,6 +25,7 @@ class User {
 
   User.fromSnap(DocumentSnapshot snap)
       : this(
+      id: snap.data.containsKey('id') ? snap.data['id'] : '',
       bday: snap.data.containsKey('birthday') ? snap.data['birthday'] : '',
       points: snap.data.containsKey('points') ? snap.data['points'] : '',
       likes: snap.data.containsKey('likes') ? snap.data['likes'] : '',
