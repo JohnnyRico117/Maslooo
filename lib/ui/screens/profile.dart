@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
               _buildUserInfo(),
               _buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
               _buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
-              //_buildCards("Settings", Icons.settings, '/settings')
+              _buildCards("Settings", Icons.settings, '/settings')
             ],
           ),
         ),

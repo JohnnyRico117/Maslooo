@@ -58,7 +58,8 @@ class HomeScreenState extends State<HomeScreen> {
       },
     );
     _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
+        const IosNotificationSettings(sound: true, badge: true, alert: true)
+    );
 //    _firebaseMessaging.getToken().then((token){
 //      _updateToken(token);
 //    });

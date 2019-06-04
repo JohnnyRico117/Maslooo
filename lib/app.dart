@@ -5,6 +5,7 @@ import 'package:maslooo_app/ui/screens/login.dart';
 import 'package:maslooo_app/ui/screens/home.dart';
 import 'package:maslooo_app/ui/screens/wish_list.dart';
 import 'package:maslooo_app/ui/screens/to_do_list.dart';
+import 'package:maslooo_app/ui/screens/settings.dart';
 
 class MasloooApp extends StatelessWidget {
   @override
@@ -17,7 +18,8 @@ class MasloooApp extends StatelessWidget {
         '/': (context) => HomeScreen(),
         '/login': (context) => LoginScreen(),
         '/wishlist': (context) => WishList(),
-        '/todolist': (context) => ToDoList()
+        '/todolist': (context) => ToDoList(),
+        '/settings': (context) => Settings(),
       },
     );
   }
