@@ -9,6 +9,10 @@ import 'package:maslooo_app/state_widget.dart';
 
 class AddToDo extends StatefulWidget {
 
+  String folderID;
+
+  AddToDo(this.folderID);
+
   @override
   _AddToDoState createState() => _AddToDoState();
 }
@@ -117,7 +121,8 @@ class _AddToDoState extends State<AddToDo> {
                     'Points': int.parse(_points),
                     'ReceiverID': appState.user.uid,
                     'Status': 0,
-                    'HappyStatus': 0
+                    'HappyStatus': 0,
+                    'FolderID': widget.folderID
                   });
 
                   print("ID: " + docRef.documentID.toString());

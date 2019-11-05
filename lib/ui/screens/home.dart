@@ -14,6 +14,7 @@ import 'package:maslooo_app/ui/screens/friend_list.dart';
 
 import 'package:maslooo_app/ui/widgets/settings_button.dart';
 import 'package:maslooo_app/ui/widgets/loading_indicator.dart';
+import 'package:maslooo_app/ui/widgets/happy_image_tile.dart';
 
 import 'package:maslooo_app/ui/screens/profile_setup.dart';
 //import 'package:maslooo_app/ui/screens/addfriend.dart';
@@ -141,6 +142,17 @@ class HomeScreenState extends State<HomeScreen> {
               () async {
             await StateWidget.of(context).signOutOfGoogle();
           },
+        ),
+        ExpansionTile(
+          title: Text("My Expressions"),
+          children: <Widget>[
+
+            HappyImageTile(appState.currentUser.veryHappy, "Very Happy", "veryhappy", "veryHappyImage"),
+            HappyImageTile(appState.currentUser.happy, "Happy", "happy", "happyImage"),
+            HappyImageTile(appState.currentUser.neutral, "Neutral", "neutral", "neutralImage"),
+            HappyImageTile(appState.currentUser.sad, "Sad", "sad", "sadImage"),
+
+          ],
         ),
       ],
     );

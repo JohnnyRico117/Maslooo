@@ -4,9 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maslooo_app/model/state.dart';
 import 'package:maslooo_app/state_widget.dart';
 import 'package:maslooo_app/ui/screens/add_todo.dart';
+import 'package:maslooo_app/ui/screens/add_folder.dart';
 import 'package:maslooo_app/ui/widgets/wish_list_item.dart';
 
 class WishList extends StatefulWidget {
+
+  String folderID;
+
+  WishList(this.folderID);
 
   @override
   _WishListState createState() => _WishListState();
@@ -71,7 +76,9 @@ class _WishListState extends State<WishList>
           ),
           Expanded(
             child: new StreamBuilder(
-              stream: Firestore.instance.collection('Tasks').where("ReceiverID", isEqualTo: appState.user.uid).snapshots(),
+              stream:
+                  widget.folderID == null ? Firestore.instance.collection('Tasks').where("ReceiverID", isEqualTo: appState.user.uid).snapshots()
+                  : Firestore.instance.collection('Tasks').where("FolderID", isEqualTo: widget.folderID).snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) return const Text('Loading....');
@@ -99,6 +106,7 @@ class _WishListState extends State<WishList>
               },
             ),
           ),
+
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -108,7 +116,7 @@ class _WishListState extends State<WishList>
                 child: FloatingActionButton(
                     onPressed: () {
                       Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddToDo()),
+                        MaterialPageRoute(builder: (context) => AddToDo(widget.folderID)),
                       );
                     },
                     tooltip: 'Add Wish',
@@ -116,7 +124,7 @@ class _WishListState extends State<WishList>
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

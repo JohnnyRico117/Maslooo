@@ -27,14 +27,17 @@ class _ProfileState extends State<Profile> {
               _buildAvatar(),
               _buildUserInfo(),
               _buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
+              _buildCards("My Wish-Folders", Icons.folder, '/folders'),
               _buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
-              _buildCards("Settings", Icons.settings, '/settings')
+              _buildCards("My To-Do-Folders", Icons.folder, '/settings')
             ],
           ),
         ),
 
       ],
     );
+
+
   }
 
   Widget _buildAvatar() {
@@ -109,13 +112,13 @@ class _ProfileState extends State<Profile> {
   Widget _buildCards(String title, IconData icon, String route) {
     Card _buildCard() {
       return Card(
-        elevation: 8.0,
-        margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 6.0),
+        elevation: 5.0,
+        margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
         child: Container(
           decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
           child: ListTile(
               contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20.0, vertical: 1.0),
+                  horizontal: 20.0, vertical: 0.1),
               leading: Icon(icon, color: Colors.white),
 
               title: Text(
@@ -134,7 +137,7 @@ class _ProfileState extends State<Profile> {
     return GestureDetector(
       onTap: () => Navigator.pushNamed(context, route),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        padding: EdgeInsets.symmetric(horizontal: 3.0),
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
