@@ -16,25 +16,35 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
 
-    return new Stack(
-      children: <Widget>[
-        //_buildDiagonalImageBackground(context),
-        new Align(
-          alignment: FractionalOffset.bottomCenter,
-          heightFactor: 1.4,
-          child: new Column(
-            children: <Widget>[
-              _buildAvatar(),
-              _buildUserInfo(),
-              _buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
-              _buildCards("My Wish-Folders", Icons.folder, '/folders'),
-              _buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
-              _buildCards("My To-Do-Folders", Icons.folder, '/settings')
-            ],
-          ),
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: [0.0, 0.6],
+            colors: [
+              Color(0xFF0091EA),
+              //Color(0xFF03A9F4),
+              //Color(0xFF29B6F6),
+              Color(0xFFFFF176),
 
-      ],
+              //Colors.white
+
+            ]
+        )
+        
+      ),
+        child: new Column(
+          children: <Widget>[
+            _buildAvatar(),
+            _buildUserInfo(),
+            _buildButtons(),
+            //_buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
+            //_buildCards("My Wish-Folders", Icons.folder, '/folders'),
+            //_buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
+            //_buildCards("My To-Do-Folders", Icons.folder, '/settings')
+          ],
+        ),
     );
 
 
@@ -81,25 +91,25 @@ class _ProfileState extends State<Profile> {
                           ],
                         )
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.star, color: Colors.yellow),
-                          Container(
-                              padding: const EdgeInsets.only(left: 8),
-                              //child: Text(appState.points.toString())
-                              child: Text(appState.currentUser.points.toString())
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      //child: Text(appState.likes)
-                        //child: Text(appState.currentUser.likes)
-                        child: Text("Fun!!!")
-                    ),
+//                    Container(
+//                      padding: const EdgeInsets.all(12),
+//                      child: Row(
+//                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//                          Icon(Icons.star, color: Colors.yellow),
+//                          Container(
+//                              padding: const EdgeInsets.only(left: 8),
+//                              //child: Text(appState.points.toString())
+//                              child: Text(appState.currentUser.points.toString())
+//                          )
+//                        ],
+//                      ),
+//                    ),
+//                    Container(
+//                      //child: Text(appState.likes)
+//                        //child: Text(appState.currentUser.likes)
+//                        child: Text("Fun!!!")
+//                    ),
 
                   ],
                 )
@@ -148,6 +158,158 @@ class _ProfileState extends State<Profile> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildButtons() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: RawMaterialButton(
+                onPressed: () {},
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.whatshot,
+                      color: Colors.red,
+                      size: 50.0,
+                    ),
+                    Text(
+                      "Wishes",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0
+                      ),
+                    ),
+
+                  ],
+                ),
+                shape: new CircleBorder(),
+                elevation: 5.0,
+                fillColor: Colors.white,
+                padding: const EdgeInsets.all(20.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: RawMaterialButton(
+                onPressed: () {},
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.list,
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),
+                    Text(
+                      "To-Do",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0
+                      ),
+                    ),
+
+                  ],
+                ),
+                shape: new CircleBorder(),
+                elevation: 5.0,
+                fillColor: Colors.white,
+                padding: const EdgeInsets.all(20.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: RawMaterialButton(
+                onPressed: () {},
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.shopping_cart,
+                      color: Colors.green,
+                      size: 50.0,
+                    ),
+                    Text(
+                      "Shop",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0
+                      ),
+                    ),
+
+                  ],
+                ),
+                shape: new CircleBorder(),
+                elevation: 5.0,
+                fillColor: Colors.white,
+                padding: const EdgeInsets.all(20.0),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: RawMaterialButton(
+                onPressed: () {},
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow,
+                      size: 50.0,
+                    ),
+                    Text(
+                      "Points",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0
+                      ),
+                    ),
+
+                  ],
+                ),
+                shape: new CircleBorder(),
+                elevation: 5.0,
+                fillColor: Colors.white,
+                padding: const EdgeInsets.all(20.0),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+              child: RawMaterialButton(
+                onPressed: () {},
+                child: Column(
+                  children: <Widget>[
+                    Icon(
+                      Icons.redeem,
+                      color: Colors.amber,
+                      size: 50.0,
+                    ),
+                    Text(
+                      "Gifts",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0
+                      ),
+                    ),
+
+                  ],
+                ),
+                shape: new CircleBorder(),
+                elevation: 5.0,
+                fillColor: Colors.white,
+                padding: const EdgeInsets.all(20.0),
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 

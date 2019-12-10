@@ -38,6 +38,26 @@ class HomeScreenState extends State<HomeScreen> {
 
   FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
+  int _selectedIndex = 0;
+
+  List<Widget> _widgetOptions = <Widget>[
+    //Home(),
+    //Phases(),
+    //ToDoList(),
+    //FriendList(),
+    Profile(),
+    FriendList(),
+    //Center(child: Icon(Icons.lightbulb_outline)),
+    Center(child: Icon(Icons.lightbulb_outline)),
+    Center(child: Icon(Icons.chat)),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
@@ -83,9 +103,10 @@ class HomeScreenState extends State<HomeScreen> {
 //    } else if (appState.newuser == true) {
 //      return new ProfileSetUp();
     } else {
-      return _buildTabView(
-        body: _buildTabsContent(),
-      );
+      return _buildBottomTabs();
+//      return _buildTabView(
+//        body: _buildTabsContent(),
+//      );
     }
   }
 
@@ -98,7 +119,7 @@ class HomeScreenState extends State<HomeScreen> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
-            elevation: 2.0,
+            elevation: 0.0,
             bottom: TabBar(
               labelColor: Theme.of(context).indicatorColor,
               tabs: [
@@ -155,6 +176,85 @@ class HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildBottomTabs() {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+//        leading: GestureDetector(
+//            onTap: () => Navigator.pushNamed(context, '/profile'),
+//            child: Container(
+//              padding: EdgeInsets.all(8.0),
+//              child: CircleAvatar(
+//                backgroundImage: appState.user.photoUrl == null ? null : new NetworkImage(appState.user.photoUrl),
+//              ),
+//            )
+//        ),
+//        title: GestureDetector(
+//          child: Text("Hello"),
+//          onTap: () => Navigator.pushNamed(context, '/projects'),
+//        ),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.settings,
+                color: Color(0xFFFFF176),
+              ),
+              onPressed: () => Navigator.pushNamed(context, '/settings')
+          )
+        ],
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xFF0091EA),
+            icon: Icon(
+              Icons.home,
+              color: Color(0xFFFFF176),
+            ),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xFF0091EA),
+            icon: Icon(
+              Icons.group,
+              color: Color(0xFFFFF176),
+            ),
+            title: Text('Friends'),
+          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xFF0091EA),
+            icon: Icon(
+              Icons.mood,
+              color: Color(0xFFFFF176),
+            ),
+            title: Text('Expressions'),
+          ),
+//          BottomNavigationBarItem(
+//            backgroundColor: Color(0xFF0091EA),
+//            icon: Icon(Icons.people),
+//            title: Text('Team'),
+//          ),
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xFF0091EA),
+            icon: Icon(
+              Icons.chat,
+              color: Color(0xFFFFF176),
+            ),
+            title: Text('Chat'),
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.black26,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

@@ -23,12 +23,10 @@ Future<FirebaseUser> signIntoFirebase(
     idToken: googleAuth.idToken,
   );
 
-
-
-  final FirebaseUser user = await _auth.signInWithCredential(credential);
+  final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
   print("signed in " + user.displayName);
   return user;
 
-  // später ersetzen mit:
+  // TODO: replace with:
   //return await _auth.signInWithCredential(credential);
 }

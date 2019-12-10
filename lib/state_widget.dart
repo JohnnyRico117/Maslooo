@@ -76,7 +76,6 @@ class _StateWidgetState extends State<StateWidget> {
       return User.fromSnap(querySnapshot);
     }
     return null;
-
   }
 
 //  Future<Iterable<Contact>> getContacts() async {
