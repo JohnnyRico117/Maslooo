@@ -77,20 +77,20 @@ class _ProfileState extends State<Profile> {
                             )
                         )
                     ),
-                    Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(Icons.cake, color: Colors.pinkAccent),
-                            Container(
-                                padding: const EdgeInsets.only(left: 8),
-                                //child: Text(appState.currentUser.bday)
-                                child: Text("01.01.1990")
-                            )
-
-                          ],
-                        )
-                    ),
+//                    Container(
+//                        child: Row(
+//                          mainAxisAlignment: MainAxisAlignment.center,
+//                          children: <Widget>[
+//                            Icon(Icons.cake, color: Colors.pinkAccent),
+//                            Container(
+//                                padding: const EdgeInsets.only(left: 8),
+//                                //child: Text(appState.currentUser.bday)
+//                                child: Text("01.01.1990")
+//                            )
+//
+//                          ],
+//                        )
+//                    ),
 //                    Container(
 //                      padding: const EdgeInsets.all(12),
 //                      child: Row(
@@ -170,7 +170,7 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.all(5.0),
               child: RawMaterialButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/wishlist'),
                 child: Column(
                   children: <Widget>[
                     Icon(
@@ -197,7 +197,7 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.all(5.0),
               child: RawMaterialButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/todolist'),
                 child: Column(
                   children: <Widget>[
                     Icon(
@@ -224,7 +224,9 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.all(5.0),
               child: RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  _willComeLater();
+                },
                 child: Column(
                   children: <Widget>[
                     Icon(
@@ -256,7 +258,9 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.all(5.0),
               child: RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  _willComeLater();
+                },
                 child: Column(
                   children: <Widget>[
                     Icon(
@@ -283,7 +287,9 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.all(5.0),
               child: RawMaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  _willComeLater();
+                },
                 child: Column(
                   children: <Widget>[
                     Icon(
@@ -310,6 +316,33 @@ class _ProfileState extends State<Profile> {
           ],
         )
       ],
+    );
+  }
+
+  Future<void> _willComeLater() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Nothing here for now'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('This function will come later!!!'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cool'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

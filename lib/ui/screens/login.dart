@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:maslooo_app/ui/screens/home.dart';
+
 import 'package:maslooo_app/ui/widgets/google_sign_in_button.dart';
 import 'package:maslooo_app/state_widget.dart';
 
@@ -34,7 +36,10 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: 50.0),
               // Passing function callback as constructor argument:
               GoogleSignInButton(
-                onPressed: () => StateWidget.of(context).signInWithGoogle(),
+                onPressed: () {
+                  StateWidget.of(context).signInWithGoogle();
+                  //Navigator.pushNamed(context, '/');
+                },
               ),// New code
             ],
           ),

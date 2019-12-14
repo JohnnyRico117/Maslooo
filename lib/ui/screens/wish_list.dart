@@ -61,72 +61,85 @@ class _WishListState extends State<WishList>
       appBar: AppBar(
         title: Text("My Wish-List"),
       ),
-      body: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("Sort by: "),
-              new DropdownButton(
-                  value: _sortby,
-                  items: _dropDownMenuItems,
-                  onChanged: changedDropDownItem
-              )
-            ],
-          ),
-          Expanded(
-            child: new StreamBuilder(
-              stream:
-                  widget.folderID == null ? Firestore.instance.collection('Tasks').where("ReceiverID", isEqualTo: appState.user.uid).snapshots()
-                  : Firestore.instance.collection('Tasks').where("FolderID", isEqualTo: widget.folderID).snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) return const Text('Loading....');
-                return ListView.builder(
-                    padding: const EdgeInsets.all(1.0),
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, i) {
-                      switch(_sortby) {
-                        case 'Alphabet':
-                          snapshot.data.documents.sort((a, b) => a['Task'].toString().toLowerCase().compareTo(b['Task'].toString().toLowerCase()));
-                          break;
-                        case 'Points':
-                        //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
-                          snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
-                          break;
-                        case 'Date':
-                          snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
-                          break;
-                        default:
-                          snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
-                          break;
-                      }
-                      return WishListItem(snapshot.data.documents[i]);
-                    });
-              },
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 0.6],
+                colors: [
+                  Color(0xFF0091EA),
+                  Color(0xFFFFF176),
+                ]
+            )
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Sort by: "),
+                new DropdownButton(
+                    value: _sortby,
+                    items: _dropDownMenuItems,
+                    onChanged: changedDropDownItem
+                )
+              ],
             ),
-          ),
-
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: FloatingActionButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddToDo(widget.folderID)),
-                      );
-                    },
-                    tooltip: 'Add Wish',
-                    child: new Icon(Icons.add)
-                ),
+            Expanded(
+              child: new StreamBuilder(
+                stream:
+                    widget.folderID == null ? Firestore.instance.collection('Tasks').where("ReceiverID", isEqualTo: appState.user.uid).snapshots()
+                    : Firestore.instance.collection('Tasks').where("FolderID", isEqualTo: widget.folderID).snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) return const Text('Loading....');
+                  return ListView.builder(
+                      padding: const EdgeInsets.all(1.0),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, i) {
+                        switch(_sortby) {
+                          case 'Alphabet':
+                            snapshot.data.documents.sort((a, b) => a['Task'].toString().toLowerCase().compareTo(b['Task'].toString().toLowerCase()));
+                            break;
+                          case 'Points':
+                          //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
+                            snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
+                            break;
+                          case 'Date':
+                            snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
+                            break;
+                          default:
+                            snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+                            break;
+                        }
+                        return WishListItem(snapshot.data.documents[i]);
+                      });
+                },
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AddToDo(widget.folderID)),
+                        );
+                      },
+                      tooltip: 'Add Wish',
+                      child: new Icon(Icons.add)
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      )
     );
   }
 

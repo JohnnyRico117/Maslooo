@@ -94,14 +94,19 @@ class HomeScreenState extends State<HomeScreen> {
 //  }
 
   Widget _buildContent() {
+
+    if (appState.user == null) {
+      return new LoginScreen();
+    }
+
     if (appState.isLoading) {
       return _buildTabView(
         body: LoadingIndicator(),
       );
-    } else if (!appState.isLoading && appState.user == null) {
-      return new LoginScreen();
-//    } else if (appState.newuser == true) {
-//      return new ProfileSetUp();
+//    } else if (!appState.isLoading && appState.user == null) {
+//      return new LoginScreen();
+////    } else if (appState.newuser == true) {
+////      return new ProfileSetUp();
     } else {
       return _buildBottomTabs();
 //      return _buildTabView(

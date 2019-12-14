@@ -53,55 +53,68 @@ class _ToDoListState extends State<ToDoList> {
       appBar: AppBar(
         title: Text("My To-Do-List"),
       ),
-      body: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("Sort by: "),
-              new DropdownButton(
-                  value: _sortby,
-                  items: _dropDownMenuItems,
-                  onChanged: changedDropDownItem
-              )
-            ],
-          ),
-          Expanded(
-            child: new StreamBuilder(
-              //stream: Firestore.instance.collection('Tasks').where("Givers", arrayContains: "giver").snapshots(),
-              stream: Firestore.instance.collection('Tasks').where("Giver", isEqualTo: appState.user.uid).snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) return const Text('Loading....');
-                return ListView.builder(
-
-                    padding: const EdgeInsets.all(16.0),
-                    //itemExtent: 80.0,
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, i) {
-
-                      switch(_sortby) {
-                        case 'Alphabet':
-                          snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
-                          break;
-                        case 'Points':
-                        //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
-                          snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
-                          break;
-                        case 'Date':
-                          snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
-                          break;
-                        default:
-                          snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
-                          break;
-                      }
-                      return ToDoItem(snapshot.data.documents[i]);
-                    });
-              },
+      body: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 0.6],
+                colors: [
+                  Color(0xFF0091EA),
+                  Color(0xFFFFF176),
+                ]
+            )
+        ),
+        child: Column(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Sort by: "),
+                new DropdownButton(
+                    value: _sortby,
+                    items: _dropDownMenuItems,
+                    onChanged: changedDropDownItem
+                )
+              ],
             ),
-          ),
-        ],
-      ),
+            Expanded(
+              child: new StreamBuilder(
+                //stream: Firestore.instance.collection('Tasks').where("Givers", arrayContains: "giver").snapshots(),
+                stream: Firestore.instance.collection('Tasks').where("Giver", isEqualTo: appState.user.uid).snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) return const Text('Loading....');
+                  return ListView.builder(
+
+                      padding: const EdgeInsets.all(1.0),
+                      //itemExtent: 80.0,
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, i) {
+
+                        switch(_sortby) {
+                          case 'Alphabet':
+                            snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+                            break;
+                          case 'Points':
+                          //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
+                            snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
+                            break;
+                          case 'Date':
+                            snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
+                            break;
+                          default:
+                            snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+                            break;
+                        }
+                        return ToDoItem(snapshot.data.documents[i]);
+                      });
+                },
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 
