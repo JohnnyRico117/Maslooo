@@ -24,49 +24,80 @@ class _FriendListState extends State<FriendList> {
     appState = StateWidget.of(context).state;
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.0, 0.6],
-                colors: [
-                  Color(0xFF0091EA),
-                  Color(0xFFFFF176),
-                ]
-            )
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: new StreamBuilder(
-                  stream: Firestore.instance.collection('users').snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return LoadingIndicator();
-                    return new ListView(
-                      children: snapshot.data.documents
-                          .where((d) => appState.currentUser.friends != null && appState.currentUser.friends.contains(d.documentID))
-                          .map((document) {
-                        return _buildFriend(document);
-                      }).toList(),
-                    );
-                  },
-                ),
+      body: Stack(
+        children: <Widget>[
+          ClipPath(
+            clipper: TopWaveClipper(),
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.0, 0.4],
+                      colors: [
+                        Colors.blueAccent[200],
+                        Colors.greenAccent[200],
+                      ]
+                  )
               ),
-            ],
+            ),
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 35.0,
+              left: 10.0,
+              right: 10.0
+            ),
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    border: new OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(
+                        const Radius.circular(10.0),
+                      ),
+                    ),
+                    filled: true,
+                    hintStyle: new TextStyle(color: Colors.grey),
+                    suffixIcon: Icon(Icons.search),
+                    hintText: "Search friend...",
+                    fillColor: Colors.white70,
+                  ),
+                ),
+                Expanded(
+                  child: new StreamBuilder(
+                    stream: Firestore.instance.collection('users').snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) return LoadingIndicator();
+
+                      snapshot.data.documents.sort((a, b) => a['username'].toLowerCase().compareTo(b['username'].toLowerCase()));
+                      
+                      return new ListView(
+                        padding: EdgeInsets.only(
+                            top: 5.0
+                        ),
+                        children: snapshot.data.documents
+                            .where((d) => appState.currentUser.friends != null && appState.currentUser.friends.contains(d.documentID))
+                            .map((document) {
+                          return _buildFriend(document);
+                        }).toList(),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddFriend()),
-            );
-          },
-          child: Icon(Icons.add)
+        onPressed: () {
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AddFriend()),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -76,12 +107,12 @@ class _FriendListState extends State<FriendList> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      margin: EdgeInsets.only(
-        left: 15.0,
-        right: 15.0,
-        bottom: 5.0,
-        top: 5.0,
-      ),
+//      margin: EdgeInsets.only(
+//        left: 15.0,
+//        right: 15.0,
+//        bottom: 5.0,
+//        top: 5.0,
+//      ),
       child: Padding(
         padding: EdgeInsets.only(
 //          left: 5.0,
@@ -196,6 +227,54 @@ class _FriendListState extends State<FriendList> {
       )
     );
   }
+}
+
+class TopWaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    // This is where we decide what part of our image is going to be visible.
+    var path = Path();
+
+    path.lineTo(0.0, size.height / 2 - 40);
+    //path.quadraticBezierTo(size.width / 4, size.height, size.width / 2, size.height);
+    //path.quadraticBezierTo(size.width, size.height, size.height, size.height - 40);
+    path.quadraticBezierTo(size.width / 2, size.height / 2, size.width, size.height / 2 -40);
+    path.lineTo(size.width, 0.0);
+
+//    path.lineTo(0.0, size.height);
+//
+//    //creating first curver near bottom left corner
+//    var firstControlPoint = new Offset(size.width / 7, size.height - 30);
+//    var firstEndPoint = new Offset(size.width / 6, size.height / 1.5);
+//
+//    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+//        firstEndPoint.dx, firstEndPoint.dy);
+//
+//    //creating second curver near center
+//    var secondControlPoint = Offset(size.width / 5, size.height / 4);
+//    var secondEndPoint = Offset(size.width / 1.5, size.height / 5);
+//
+//    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+//        secondEndPoint.dx, secondEndPoint.dy);
+//
+//    //creating third curver near top right corner
+//    var thirdControlPoint = Offset(
+//        size.width - (size.width / 9), size.height / 6);
+//    var thirdEndPoint = Offset(size.width, 0.0);
+//
+//    path.quadraticBezierTo(thirdControlPoint.dx, thirdControlPoint.dy,
+//        thirdEndPoint.dx, thirdEndPoint.dy);
+//
+//    ///move to top right corner
+//    path.lineTo(size.width, 0.0);
+
+    ///finally close the path by reaching start point from top right corner
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
 enum FriendAction { profile, message, remove }

@@ -59,20 +59,25 @@ class _WishListState extends State<WishList>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Wish-List"),
+        title: Text(
+          "My Wish-List",
+          style: TextStyle(
+            color: Colors.black
+          ),
+        ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.0, 0.6],
-                colors: [
-                  Color(0xFF0091EA),
-                  Color(0xFFFFF176),
-                ]
-            )
-        ),
+//        decoration: BoxDecoration(
+//            gradient: LinearGradient(
+//                begin: Alignment.topCenter,
+//                end: Alignment.bottomCenter,
+//                stops: [0.0, 0.6],
+//                colors: [
+//                  Color(0xFF0091EA),
+//                  Color(0xFFFFF176),
+//                ]
+//            )
+//        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -114,32 +119,41 @@ class _WishListState extends State<WishList>
                             break;
                         }
                         return WishListItem(snapshot.data.documents[i]);
-                      });
+                    });
                 },
               ),
             ),
 
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: FloatingActionButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AddToDo(widget.folderID)),
-                        );
-                      },
-                      tooltip: 'Add Wish',
-                      child: new Icon(Icons.add)
-                  ),
-                ),
-              ],
-            ),
+//            Row(
+//              crossAxisAlignment: CrossAxisAlignment.center,
+//              mainAxisAlignment: MainAxisAlignment.end,
+//              children: <Widget>[
+//                Padding(
+//                  padding: EdgeInsets.all(10.0),
+//                  child: FloatingActionButton(
+//                      onPressed: () {
+//                        Navigator.push(context,
+//                          MaterialPageRoute(builder: (context) => AddToDo(widget.folderID)),
+//                        );
+//                      },
+//                      tooltip: 'Add Wish',
+//                      child: new Icon(Icons.add)
+//                  ),
+//                ),
+//              ],
+//            ),
           ],
         ),
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddToDo(widget.folderID)),
+            );
+          },
+          tooltip: 'Add Wish',
+          child: new Icon(Icons.add)
+      ),
     );
   }
 

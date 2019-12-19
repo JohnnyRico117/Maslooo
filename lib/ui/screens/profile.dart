@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 import 'package:maslooo_app/model/state.dart';
 import 'package:maslooo_app/state_widget.dart';
@@ -17,50 +18,94 @@ class _ProfileState extends State<Profile> {
     appState = StateWidget.of(context).state;
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.0, 0.6],
-            colors: [
-              Color(0xFF0091EA),
-              //Color(0xFF03A9F4),
-              //Color(0xFF29B6F6),
-              Color(0xFFFFF176),
+      alignment: Alignment.topCenter,
+      child: Stack(
+        children: <Widget>[
+          ClipPath(
+            child: Image.asset("assets/beach.webp"),
+            clipper: BottomWaveClipper(),
+          ),
+          _buildAvatar(),
+          _buildUserInfo(),
+          ListView(
+            padding: EdgeInsets.only(
+              top: 220.0
+            ),
+            children: <Widget>[
+              _buildFirstCard(),
+              _buildSecondCard(),
+              _buildLittleCards()
+            ],
+          ),
 
-              //Colors.white
 
-            ]
-        )
-        
-      ),
-        child: new Column(
-          children: <Widget>[
-            _buildAvatar(),
-            _buildUserInfo(),
-            _buildButtons(),
-            //_buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
-            //_buildCards("My Wish-Folders", Icons.folder, '/folders'),
-            //_buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
-            //_buildCards("My To-Do-Folders", Icons.folder, '/settings')
-          ],
-        ),
+
+
+        ],
+      )
     );
+
+//    return Container(
+//      decoration: BoxDecoration(
+//        image: DecorationImage(
+//          image: AssetImage("assets/beach.webp"),
+//          fit: BoxFit.fill,
+//        ),
+//
+//      ),
+////      decoration: BoxDecoration(
+////        gradient: LinearGradient(
+////            begin: Alignment.topCenter,
+////            end: Alignment.bottomCenter,
+////            stops: [0.0, 0.6],
+////            colors: [
+////              Color(0xFF0091EA),
+////              //Color(0xFF03A9F4),
+////              //Color(0xFF29B6F6),
+////              Color(0xFFFFF176),
+////
+////              //Colors.white
+////
+////            ]
+////        )
+////
+////      ),
+//        child: new Column(
+//          children: <Widget>[
+//            _buildAvatar(),
+//            _buildUserInfo(),
+//            _buildButtons(),
+//            //_buildCards("My Wish-List", Icons.sentiment_very_satisfied, '/wishlist'),
+//            //_buildCards("My Wish-Folders", Icons.folder, '/folders'),
+//            //_buildCards("My To-Do-List", Icons.sentiment_very_satisfied, '/todolist'),
+//            //_buildCards("My To-Do-Folders", Icons.folder, '/settings')
+//          ],
+//        ),
+//    );
 
 
   }
 
   Widget _buildAvatar() {
-    return
-      new CircleAvatar(
-        backgroundImage: new NetworkImage(appState.user.photoUrl),
-        radius: 50.0,
-      );
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 70.0
+        ),
+        child: CircleAvatar(
+          backgroundImage: new NetworkImage(appState.user.photoUrl),
+          radius: 50.0,
+        ),
+      )
+
+    );
   }
 
   Widget _buildUserInfo() {
-    return new Container(
-        padding: const EdgeInsets.all(12),
+    return Container(
+        padding: EdgeInsets.only(
+            top: 180.0),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -201,7 +246,7 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: <Widget>[
                     Icon(
-                      Icons.list,
+                      Icons.clear_all,
                       color: Colors.blue,
                       size: 50.0,
                     ),
@@ -346,4 +391,296 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  Widget _buildFirstCard() {
+    return Align(
+      alignment: Alignment.center,
+      child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            elevation: 5.0,
+            child: Container(
+              width: 300.0,
+              height: 95.0,
+              //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+              child: Center(
+                child: ListTile(
+                  onTap: () => Navigator.pushNamed(context, '/wishlist'),
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 0.1),
+//                  leading: Icon(
+//                    Icons.whatshot,
+//                    color: Colors.red,
+//                    size: 50.0,
+//                  ),
+                  leading: ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (Rect bounds) {
+                      return ui.Gradient.linear(
+                        Offset(10.0, 20.0),
+                        Offset(30.0, 40.0),
+                        [
+                          Colors.blueAccent[400],
+                          Colors.greenAccent[400],
+                        ],
+                      );
+                    },
+                    child: Icon(
+                      Icons.whatshot,
+                      size: 50.0,
+                    ),
+                  ),
+                  title: Text(
+                    "My Wish-List",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    "30/300"
+                  ),
+                  trailing: ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (Rect bounds) {
+                      return ui.Gradient.linear(
+                        Offset(10.0, 20.0),
+                        Offset(30.0, 40.0),
+                        [
+                          Colors.blueAccent[400],
+                          Colors.greenAccent[400],
+                        ],
+                      );
+                    },
+                    child: Icon(
+                      Icons.keyboard_arrow_right,
+                      size: 40.0,
+                    ),
+                  ),
+//                  trailing: Icon(
+//                    Icons.keyboard_arrow_right,
+//                    size: 40.0,
+//                  ),
+                ),
+              )
+            ),
+      ),
+    );
+  }
+
+  Widget _buildSecondCard() {
+    return Align(
+      alignment: Alignment.center,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 5.0,
+        child: Container(
+            width: 300.0,
+            height: 95.0,
+            //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+            child: Center(
+              child: ListTile(
+                onTap: () => Navigator.pushNamed(context, '/todolist'),
+                contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 0.1),
+//                leading: Icon(
+//                  Icons.clear_all,
+//                  color: Colors.blue,
+//                  size: 50.0,
+//                ),
+                leading: ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (Rect bounds) {
+                    return ui.Gradient.linear(
+                      Offset(10.0, 20.0),
+                      Offset(30.0, 40.0),
+                      [
+                        Colors.blueAccent[400],
+                        Colors.greenAccent[400],
+                      ],
+                    );
+                  },
+                  child: Icon(
+                    Icons.clear_all,
+                    size: 50.0,
+                  ),
+                ),
+                title: Text(
+                  "My To-Do-List",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                    "40/300"
+                ),
+                trailing: ShaderMask(
+                  blendMode: BlendMode.srcIn,
+                  shaderCallback: (Rect bounds) {
+                    return ui.Gradient.linear(
+                      Offset(10.0, 20.0),
+                      Offset(30.0, 40.0),
+                      [
+                        Colors.blueAccent[400],
+                        Colors.greenAccent[400],
+                      ],
+                    );
+                  },
+                  child: Icon(
+                    Icons.keyboard_arrow_right,
+                    size: 40.0,
+                  ),
+                ),
+//                trailing: Icon(
+//                  Icons.keyboard_arrow_right,
+//                  size: 40.0,
+//                ),
+              ),
+            )
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLittleCards() {
+    return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                elevation: 5.0,
+                child: Container(
+                  width: 145.0,
+                  height: 95.0,
+                  //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+                  child: Center(
+                    child: ListTile(
+                      onTap: () =>_willComeLater(),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 0.1),
+//                      leading: Icon(
+//                        Icons.star,
+//                        color: Colors.yellow,
+//                        size: 40.0,
+//                      ),
+                      leading: ShaderMask(
+                        blendMode: BlendMode.srcIn,
+                        shaderCallback: (Rect bounds) {
+                          return ui.Gradient.linear(
+                            Offset(10.0, 20.0),
+                            Offset(20.0, 30.0),
+                            [
+                              Colors.blueAccent[400],
+                              Colors.greenAccent[400],
+                            ],
+                          );
+                        },
+                        child: Icon(
+                          Icons.star,
+                          size: 40.0,
+                        ),
+                      ),
+                      title: Text(
+                        "Points",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        "4000"
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+                elevation: 5.0,
+                child: Container(
+                  width: 145.0,
+                  height: 95.0,
+                  //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
+                  child: Center(
+                    child: ListTile(
+                      onTap: () =>_willComeLater(),
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 0.1),
+//                      leading: Icon(
+//                        Icons.redeem,
+//                        color: Colors.amber,
+//                        size: 40.0,
+//                      ),
+
+                      leading: ShaderMask(
+                        blendMode: BlendMode.srcIn,
+                        shaderCallback: (Rect bounds) {
+                          return ui.Gradient.linear(
+                            Offset(10.0, 20.0),
+                            Offset(20.0, 30.0),
+                            [
+                              Colors.blueAccent[400],
+                              Colors.greenAccent[400],
+                            ],
+                          );
+                        },
+                        child: Icon(
+                          Icons.redeem,
+                          size: 40.0,
+                        ),
+                      ),
+                      title: Text(
+                        "Gifts",
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        "45"
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+    );
+  }
+
+}
+
+class BottomWaveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+
+    path.lineTo(0.0, size.height - 40);
+    //path.quadraticBezierTo(size.width / 4, size.height, size.width / 2, size.height);
+    //path.quadraticBezierTo(size.width, size.height, size.height, size.height - 40);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height -40);
+    path.lineTo(size.width, 0.0);
+
+//    path.lineTo(-100, size.height/2);
+//    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height / 6 * 4);
+//    path.lineTo(size.width, 0);
+
+
+//    var firstControlPoint = Offset(size.width / 4, size.height);
+//    var firstEndPoint = Offset(size.width / 2.25, size.height - 30.0);
+//    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+//        firstEndPoint.dx, firstEndPoint.dy);
+//
+//    var secondControlPoint =
+//    Offset(size.width - (size.width / 3.25), size.height - 65);
+//    var secondEndPoint = Offset(size.width, size.height - 40);
+//    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+//        secondEndPoint.dx, secondEndPoint.dy);
+//
+//    path.lineTo(size.width, size.height - 40);
+//    path.lineTo(size.width, 0.0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

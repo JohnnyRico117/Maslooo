@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -186,60 +187,131 @@ class HomeScreenState extends State<HomeScreen> {
 
   Widget _buildBottomTabs() {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-//        leading: GestureDetector(
-//            onTap: () => Navigator.pushNamed(context, '/profile'),
-//            child: Container(
-//              padding: EdgeInsets.all(8.0),
-//              child: CircleAvatar(
-//                backgroundImage: appState.user.photoUrl == null ? null : new NetworkImage(appState.user.photoUrl),
+//      appBar: AppBar(
+//        elevation: 0.0,
+//        backgroundColor: Colors.transparent,
+////        leading: GestureDetector(
+////            onTap: () => Navigator.pushNamed(context, '/profile'),
+////            child: Container(
+////              padding: EdgeInsets.all(8.0),
+////              child: CircleAvatar(
+////                backgroundImage: appState.user.photoUrl == null ? null : new NetworkImage(appState.user.photoUrl),
+////              ),
+////            )
+////        ),
+////        title: GestureDetector(
+////          child: Text("Hello"),
+////          onTap: () => Navigator.pushNamed(context, '/projects'),
+////        ),
+//        actions: <Widget>[
+//          IconButton(
+//              icon: Icon(
+//                Icons.settings,
+//                color: Color(0xFFFFF176),
 //              ),
-//            )
-//        ),
-//        title: GestureDetector(
-//          child: Text("Hello"),
-//          onTap: () => Navigator.pushNamed(context, '/projects'),
-//        ),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.settings,
-                color: Color(0xFFFFF176),
-              ),
-              onPressed: () => Navigator.pushNamed(context, '/settings')
-          )
-        ],
-      ),
+//              onPressed: () => Navigator.pushNamed(context, '/settings')
+//          )
+//        ],
+//      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 5.0,
         type: BottomNavigationBarType.shifting,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Color(0xFF0091EA),
+            activeIcon: ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (Rect bounds) {
+                return ui.Gradient.linear(
+                  Offset(0.0, 12.0),
+                  Offset(12.0, 24.0),
+                  [
+                    Colors.blueAccent[100],
+                    Colors.greenAccent[100],
+                  ],
+                );
+//                return RadialGradient(
+//                  center: Alignment.topRight,
+//                  //stops: [0.5, 0.5],
+//                  radius: 2.0,
+//                  colors: <Color>[
+//                    Colors.greenAccent[200],
+//                    Colors.blueAccent[200]
+//                  ],
+//                  tileMode: TileMode.repeated,
+//                ).createShader(bounds);
+              },
+              child: Icon(Icons.home),
+            ),
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.home,
-              color: Color(0xFFFFF176),
+              color: Colors.grey,
             ),
-            title: Text('Home'),
+            title: Text(
+              'Home',
+              style: TextStyle(
+                color: Colors.blueAccent[100]
+              ),
+            ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xFF0091EA),
+            activeIcon: ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (Rect bounds) {
+                return ui.Gradient.linear(
+                  Offset(0.0, 12.0),
+                  Offset(12.0, 24.0),
+                  [
+                    Colors.blueAccent[100],
+                    Colors.greenAccent[100],
+                  ],
+                );
+              },
+              child: Icon(Icons.group),
+            ),
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.group,
-              color: Color(0xFFFFF176),
+              color: Colors.grey,
+              //color: Color(0xFFFFF176),
             ),
-            title: Text('Friends'),
+            title: Text(
+              'Friends',
+              style: TextStyle(
+                  color: Colors.blueAccent[100]
+              ),
+            ),
           ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xFF0091EA),
+            activeIcon: ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (Rect bounds) {
+                return ui.Gradient.linear(
+                  Offset(0.0, 12.0),
+                  Offset(12.0, 24.0),
+                  [
+                    Colors.blueAccent[100],
+                    Colors.greenAccent[100],
+                  ],
+                );
+              },
+              child: Icon(Icons.mood),
+            ),
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.mood,
-              color: Color(0xFFFFF176),
+              color: Colors.grey,
+              //color: Color(0xFFFFF176),
             ),
-            title: Text('Expressions'),
+            title: Text(
+              'Expressions',
+              style: TextStyle(
+                  color: Colors.blueAccent[100]
+              ),
+            ),
           ),
 //          BottomNavigationBarItem(
 //            backgroundColor: Color(0xFF0091EA),
@@ -247,17 +319,37 @@ class HomeScreenState extends State<HomeScreen> {
 //            title: Text('Team'),
 //          ),
           BottomNavigationBarItem(
-            backgroundColor: Color(0xFF0091EA),
+            activeIcon: ShaderMask(
+              blendMode: BlendMode.srcIn,
+              shaderCallback: (Rect bounds) {
+                return ui.Gradient.linear(
+                  Offset(0.0, 12.0),
+                  Offset(12.0, 24.0),
+                  [
+                    Colors.blueAccent[100],
+                    Colors.greenAccent[100],
+                  ],
+                );
+              },
+              child: Icon(Icons.chat),
+            ),
+            backgroundColor: Colors.white,
             icon: Icon(
               Icons.chat,
-              color: Color(0xFFFFF176),
+              color: Colors.grey,
+              //color: Color(0xFFFFF176),
             ),
-            title: Text('Chat'),
+            title: Text(
+              'Chat',
+              style: TextStyle(
+                  color: Colors.blueAccent[100]
+              ),
+            ),
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.black26,
+        //selectedItemColor: Color(0xAA0091EA),
+        //unselectedItemColor: Colors.black26,
         onTap: _onItemTapped,
       ),
     );

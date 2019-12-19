@@ -24,7 +24,7 @@ ThemeData buildTheme() {
 
   return base.copyWith(
     textTheme: _buildTextTheme(base.textTheme),
-    primaryColor: const Color(0xFF0091EA),
+    primaryColor: Colors.white,
     indicatorColor: const Color(0xFFFFC629),
     scaffoldBackgroundColor: const Color(0xFFF5F5F5),
     accentColor: const Color(0xFF0091EA),
@@ -32,6 +32,11 @@ ThemeData buildTheme() {
       color: const Color(0xFFCCC5AF),
       size: 20.0,
     ),
-    buttonColor: Colors.white,
+    buttonColor: Colors.black,
+    appBarTheme: AppBarTheme(
+      iconTheme: IconThemeData(
+        color: Colors.black
+      )
+    )
   );
 }

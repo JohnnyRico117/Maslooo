@@ -34,7 +34,11 @@ class _WishListItemState extends State<WishListItem> {
 
   final _biggerFont = const TextStyle(fontSize: 18.0);
   final _smallerFont = const TextStyle(fontSize: 12.0);
-  final _boldFont = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+  final _boldFont = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
 
   void setGiver() {
     Firestore.instance.collection('users').document(widget.snap.data['Giver']).get().then((snap) {
@@ -62,6 +66,9 @@ class _WishListItemState extends State<WishListItem> {
     final int happyStatus = widget.snap.data['HappyStatus'];
 
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: Padding(
         padding: EdgeInsets.only(
           bottom: 10.0,
@@ -74,18 +81,50 @@ class _WishListItemState extends State<WishListItem> {
                 width: 60.0,
                 height: 60.0,
                 decoration: BoxDecoration(
-                    color: Colors.blue,
-                    shape: BoxShape.circle
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    //stops: [0.0, 0.6],
+                    colors: [
+                      Colors.blueAccent[200],
+                      Colors.greenAccent[200],
+                    ],
+                  ),
+                  shape: BoxShape.circle,
                 ),
               ),
-              Icon(
-                Icons.star,
-                color: Colors.yellow,
-                size: 55.0,
-              ),
+//              Container(
+//                padding: EdgeInsets.only(
+//                  left: 15.0
+//                ),
+//                //alignment: Alignment.center,
+//
+//                child: Icon(
+//                  Icons.star,
+//                  color: Colors.white,
+//                  size: 30.0,
+//                ),
+//
+//              ),
               Positioned.fill(
+                bottom: 20.0,
+                child: Icon(
+                  Icons.star,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+
+              ),
+
+
+              Positioned.fill(
+                top: 20.0,
                 child: Center(
-                  child: Text(widget.snap.data['Points'].toString(), style: _boldFont),
+                  child: Text(
+                    widget.snap.data['Points'].toString(),
+                    style: _boldFont,
+
+                  ),
                 )
               ),
             ],

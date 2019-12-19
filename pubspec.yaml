@@ -54,6 +54,8 @@ flutter:
     #- assets/birthday-christmas-gift-17796.jpg
     - assets/caique-silva-481033-unsplash.jpg
     #- assets/No_picture_available.png
+    - assets/beach.webp
+    - assets/beach2.webp
 
 
   fonts:
