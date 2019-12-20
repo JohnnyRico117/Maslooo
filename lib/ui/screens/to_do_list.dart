@@ -51,20 +51,25 @@ class _ToDoListState extends State<ToDoList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("My To-Do-List"),
+        title: Text(
+          "My To-Do-List",
+          style: TextStyle(
+              color: Colors.black
+          ),
+        ),
       ),
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: [0.0, 0.6],
-                colors: [
-                  Color(0xFF0091EA),
-                  Color(0xFFFFF176),
-                ]
-            )
-        ),
+//        decoration: BoxDecoration(
+//            gradient: LinearGradient(
+//                begin: Alignment.topCenter,
+//                end: Alignment.bottomCenter,
+//                stops: [0.0, 0.6],
+//                colors: [
+//                  Color(0xFF0091EA),
+//                  Color(0xFFFFF176),
+//                ]
+//            )
+//        ),
         child: Column(
           children: <Widget>[
             Row(

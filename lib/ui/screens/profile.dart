@@ -17,6 +17,90 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     appState = StateWidget.of(context).state;
 
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        actions: <Widget>[
+          ShaderMask(
+                blendMode: BlendMode.srcIn,
+                shaderCallback: (Rect bounds) {
+                  return ui.Gradient.linear(
+                    Offset(10.0, 20.0),
+                    Offset(30.0, 40.0),
+                    [
+                      Colors.blueAccent[400],
+                      Colors.greenAccent[400],
+                    ],
+                  );
+                },
+                child: IconButton(
+                    icon: Icon(Icons.settings),
+                    iconSize: 30.0,
+                    onPressed: () => Navigator.pushNamed(context, '/settings')
+                ),
+              ),
+        ],
+      ),
+      body: Container(
+          alignment: Alignment.topCenter,
+          child: Stack(
+            children: <Widget>[
+              ClipPath(
+                child: Image.asset("assets/beach.webp"),
+                clipper: BottomWaveClipper(),
+              ),
+//              Align(
+//                alignment: Alignment.topRight,
+//                child: Padding(
+//                    padding: EdgeInsets.only(
+//                        top: 30.0
+//                    ),
+////              child: ShaderMask(
+////                blendMode: BlendMode.srcIn,
+////                shaderCallback: (Rect bounds) {
+////                  return ui.Gradient.linear(
+////                    Offset(10.0, 20.0),
+////                    Offset(30.0, 40.0),
+////                    [
+////                      Colors.blueAccent[400],
+////                      Colors.greenAccent[400],
+////                    ],
+////                  );
+////                },
+////                child: IconButton(
+////                    icon: Icon(Icons.settings),
+////                    iconSize: 30.0,
+////                    onPressed: () => Navigator.pushNamed(context, '/settings')
+////                ),
+////              ),
+//                    child: Material(
+//                      child: IconButton(
+//                        icon: Icon(Icons.settings),
+//                        iconSize: 30.0,
+//                        onPressed: () => print("LLLL"),
+//                        //onPressed: () => Navigator.pushNamed(context, '/settings')
+//                      ),
+//                    )
+//
+//                ),
+//              ),
+              _buildAvatar(),
+              _buildUserInfo(),
+              ListView(
+                padding: EdgeInsets.only(
+                    top: 170.0
+                ),
+                children: <Widget>[
+                  _buildFirstCard(),
+                  _buildSecondCard(),
+                  _buildLittleCards()
+                ],
+              ),
+            ],
+          )
+      )
+    );
+
     return Container(
       alignment: Alignment.topCenter,
       child: Stack(
@@ -24,6 +108,41 @@ class _ProfileState extends State<Profile> {
           ClipPath(
             child: Image.asset("assets/beach.webp"),
             clipper: BottomWaveClipper(),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 30.0
+              ),
+//              child: ShaderMask(
+//                blendMode: BlendMode.srcIn,
+//                shaderCallback: (Rect bounds) {
+//                  return ui.Gradient.linear(
+//                    Offset(10.0, 20.0),
+//                    Offset(30.0, 40.0),
+//                    [
+//                      Colors.blueAccent[400],
+//                      Colors.greenAccent[400],
+//                    ],
+//                  );
+//                },
+//                child: IconButton(
+//                    icon: Icon(Icons.settings),
+//                    iconSize: 30.0,
+//                    onPressed: () => Navigator.pushNamed(context, '/settings')
+//                ),
+//              ),
+              child: Material(
+                child: IconButton(
+                  icon: Icon(Icons.settings),
+                  iconSize: 30.0,
+                  onPressed: () => print("LLLL"),
+                  //onPressed: () => Navigator.pushNamed(context, '/settings')
+                ),
+              )
+
+            ),
           ),
           _buildAvatar(),
           _buildUserInfo(),
@@ -91,7 +210,7 @@ class _ProfileState extends State<Profile> {
       alignment: Alignment.topCenter,
       child: Padding(
         padding: EdgeInsets.only(
-          top: 70.0
+          top: 20.0
         ),
         child: CircleAvatar(
           backgroundImage: new NetworkImage(appState.user.photoUrl),
@@ -105,7 +224,7 @@ class _ProfileState extends State<Profile> {
   Widget _buildUserInfo() {
     return Container(
         padding: EdgeInsets.only(
-            top: 180.0),
+            top: 130.0),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -401,7 +520,7 @@ class _ProfileState extends State<Profile> {
             elevation: 5.0,
             child: Container(
               width: 300.0,
-              height: 95.0,
+              height: 85.0,
               //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
               child: Center(
                 child: ListTile(
@@ -476,7 +595,7 @@ class _ProfileState extends State<Profile> {
         elevation: 5.0,
         child: Container(
             width: 300.0,
-            height: 95.0,
+            height: 85.0,
             //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
             child: Center(
               child: ListTile(
@@ -552,7 +671,7 @@ class _ProfileState extends State<Profile> {
                 elevation: 5.0,
                 child: Container(
                   width: 145.0,
-                  height: 95.0,
+                  height: 85.0,
                   //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
                   child: Center(
                     child: ListTile(
@@ -587,7 +706,7 @@ class _ProfileState extends State<Profile> {
                             color: Colors.black, fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        "4000"
+                        appState.currentUser.points.toString()
                       ),
                     ),
                   ),
@@ -600,7 +719,7 @@ class _ProfileState extends State<Profile> {
                 elevation: 5.0,
                 child: Container(
                   width: 145.0,
-                  height: 95.0,
+                  height: 85.0,
                   //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
                   child: Center(
                     child: ListTile(
@@ -653,10 +772,10 @@ class BottomWaveClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     var path = Path();
 
-    path.lineTo(0.0, size.height - 40);
+    path.lineTo(0.0, size.height - 60);
     //path.quadraticBezierTo(size.width / 4, size.height, size.width / 2, size.height);
     //path.quadraticBezierTo(size.width, size.height, size.height, size.height - 40);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height -40);
+    path.quadraticBezierTo(size.width / 2, size.height - 40, size.width, size.height -60);
     path.lineTo(size.width, 0.0);
 
 //    path.lineTo(-100, size.height/2);

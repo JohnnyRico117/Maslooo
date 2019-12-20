@@ -368,7 +368,7 @@ class _WishListItemState extends State<WishListItem> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text("Lets's go!"),
+              child: Text("Let's go!"),
               onPressed: () {
                 uploadPic(_image, widget.snap.documentID).then((val) => {
                   setState(() {
@@ -377,6 +377,9 @@ class _WishListItemState extends State<WishListItem> {
                       'Status': 2
                     });
                   }),
+
+
+
                   // TODO: Check if this is possible:
 //                widget.snap.reference.updateData({
 //                "happyImage": val

@@ -20,7 +20,7 @@ class _ChatState extends State<Chat> {
 
     // doesn't have to be Padding
     return Padding(
-        // TODO
+      // TODO
     );
   }
 }

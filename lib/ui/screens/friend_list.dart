@@ -16,7 +16,19 @@ class _FriendListState extends State<FriendList> {
 
   StateModel appState;
 
+  TextEditingController controller = new TextEditingController();
+  String filter;
   FriendAction _selection;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      setState(() {
+        filter = controller.text;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +47,8 @@ class _FriendListState extends State<FriendList> {
                       end: Alignment.bottomRight,
                       stops: [0.0, 0.4],
                       colors: [
-                        Colors.blueAccent[200],
-                        Colors.greenAccent[200],
+                        Colors.blueAccent[100],
+                        Colors.greenAccent[100],
                       ]
                   )
               ),
@@ -51,6 +63,7 @@ class _FriendListState extends State<FriendList> {
             child: Column(
               children: <Widget>[
                 TextField(
+                  controller: controller,
                   decoration: InputDecoration(
                     border: new OutlineInputBorder(
                       borderRadius: const BorderRadius.all(
@@ -77,11 +90,20 @@ class _FriendListState extends State<FriendList> {
                         padding: EdgeInsets.only(
                             top: 5.0
                         ),
-                        children: snapshot.data.documents
-                            .where((d) => appState.currentUser.friends != null && appState.currentUser.friends.contains(d.documentID))
-                            .map((document) {
-                          return _buildFriend(document);
-                        }).toList(),
+                        children:
+                          filter == null || filter == "" ?
+                            snapshot.data.documents
+                                .where((d) => appState.currentUser.friends != null && appState.currentUser.friends.contains(d.documentID))
+                                .map((document) {
+                              return _buildFriend(document);
+                            }).toList()
+                              :
+                            snapshot.data.documents
+                                .where((d) => appState.currentUser.friends != null && appState.currentUser.friends.contains(d.documentID))
+                                .where((d) => d.data['username'].toString().toLowerCase().contains(filter.toLowerCase()))
+                                .map((document) {
+                              return _buildFriend(document);
+                            }).toList(),
                       );
                     },
                   ),
@@ -226,6 +248,12 @@ class _FriendListState extends State<FriendList> {
         )
       )
     );
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 }
 

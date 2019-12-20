@@ -154,82 +154,82 @@ class _DetailScreenState extends State<DetailScreen> {
 
     return GestureDetector(
         child: Scaffold(
-          body: Padding(
-            padding: EdgeInsets.all(2.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                DetailItemImage("https://images.pexels.com/photos/17796/christmas-xmas-gifts-presents.jpg?cs=srgb&dl=birthday-christmas-gift-17796.jpg&fm=jpg"),
-                DetailItemTitle(widget.snap, 25.0),
-                Container(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-                  child: Row(
-                    children: [
-                      Text('Description: ', style: _biggerFont),
-                      Text("Enter a description....", style: _biggerFont),
-                    ],
+            body: Padding(
+              padding: EdgeInsets.all(2.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  DetailItemImage("https://images.pexels.com/photos/17796/christmas-xmas-gifts-presents.jpg?cs=srgb&dl=birthday-christmas-gift-17796.jpg&fm=jpg"),
+                  DetailItemTitle(widget.snap, 25.0),
+                  Container(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+                    child: Row(
+                      children: [
+                        Text('Description: ', style: _biggerFont),
+                        Text("Enter a description....", style: _biggerFont),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-                  child: Row(
-                    children: [
-                      Text('Prize: ', style: _biggerFont),
-                      _prizeText(),
-                    ],
+                  Container(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+                    child: Row(
+                      children: [
+                        Text('Prize: ', style: _biggerFont),
+                        _prizeText(),
+                      ],
+                    ),
                   ),
-                ),
 
-                Container(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-                  child: Row(
-                    children: [
-                      Text('Points: ', style: _biggerFont),
-                      _pointsText()
-                    ],
+                  Container(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+                    child: Row(
+                      children: [
+                        Text('Points: ', style: _biggerFont),
+                        _pointsText()
+                      ],
+                    ),
                   ),
-                ),
 
-                Container(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-                  child: Row(
-                    children: [
-                      Text('Assigned to: ', style: _biggerFont),
-                      GestureDetector(
-                        child:
-                        _giverName == null ? Text("Not Assigned", style: _biggerFont) :
-                        Text(_giverName, style: _biggerFont),
-                        onTap: () {
-                          setState(()  {
-                            _tapped = false;
-                            _pointTapped = false;
-                          });
-
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => AssignToDo(widget.snap)),
-                          ).then((newGiver) {
-                            setState(() {
-                              _giverName = newGiver;
+                  Container(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+                    child: Row(
+                      children: [
+                        Text('Assigned to: ', style: _biggerFont),
+                        GestureDetector(
+                          child:
+                          _giverName == null ? Text("Not Assigned", style: _biggerFont) :
+                          Text(_giverName, style: _biggerFont),
+                          onTap: () {
+                            setState(()  {
+                              _tapped = false;
+                              _pointTapped = false;
                             });
-                          });
-                        },
-                      )
-                    ],
-                  ),
-                ),
 
-                Container(
-                  padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
-                  child: Row(
-                    children: [
-                      Text('Status: ', style: _biggerFont),
-                      Text(widget.snap.data['Done'] == true ? "Done" : "Not Done", style: _biggerFont)
-                    ],
+                            Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => AssignToDo(widget.snap)),
+                            ).then((newGiver) {
+                              setState(() {
+                                _giverName = newGiver;
+                              });
+                            });
+                          },
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
+
+                  Container(
+                    padding: const EdgeInsets.only(left: 15.0, bottom: 15.0),
+                    child: Row(
+                      children: [
+                        Text('Status: ', style: _biggerFont),
+                        Text(widget.snap.data['Done'] == true ? "Done" : "Not Done", style: _biggerFont)
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
         ),
         onTap: () {
           FocusScope.of(context).requestFocus(_focusNode);
