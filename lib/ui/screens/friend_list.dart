@@ -62,21 +62,25 @@ class _FriendListState extends State<FriendList> {
             ),
             child: Column(
               children: <Widget>[
-                TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    border: new OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(
-                        const Radius.circular(10.0),
+                Container(
+                  width: 300.0,
+                  child: TextField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      border: new OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          const Radius.circular(10.0),
+                        ),
                       ),
+                      filled: true,
+                      hintStyle: new TextStyle(color: Colors.grey),
+                      suffixIcon: Icon(Icons.search),
+                      hintText: "Search friend...",
+                      fillColor: Colors.white70,
                     ),
-                    filled: true,
-                    hintStyle: new TextStyle(color: Colors.grey),
-                    suffixIcon: Icon(Icons.search),
-                    hintText: "Search friend...",
-                    fillColor: Colors.white70,
                   ),
                 ),
+
                 Expanded(
                   child: new StreamBuilder(
                     stream: Firestore.instance.collection('users').snapshots(),
@@ -125,129 +129,136 @@ class _FriendListState extends State<FriendList> {
   }
 
   Widget _buildFriend(DocumentSnapshot document) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
+    return Align(
+      child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
 //      margin: EdgeInsets.only(
 //        left: 15.0,
 //        right: 15.0,
 //        bottom: 5.0,
 //        top: 5.0,
 //      ),
-      child: Padding(
-        padding: EdgeInsets.only(
-//          left: 5.0,
-//          right: 5.0,
-          bottom: 5.0,
-          top: 5.0,
-        ),
-        child: ListTile(
-          leading: new CircleAvatar(
-            backgroundImage: new NetworkImage(document['userpic']),
-            radius: 30.0,
-          ),
-          title: new Text(document['username']),
-          trailing: PopupMenuButton<FriendAction>(
-            onSelected: (FriendAction result) {
+          child: Container(
+              width: 300.0,
+              height: 85.0,
+//        padding: EdgeInsets.only(
+////          left: 5.0,
+////          right: 5.0,
+//          bottom: 5.0,
+//          top: 5.0,
+//        ),
+              child: Align(
+                child: ListTile(
+                leading: new CircleAvatar(
+                  backgroundImage: new NetworkImage(document['userpic']),
+                  radius: 30.0,
+                ),
+                title: new Text(document['username']),
+                trailing: PopupMenuButton<FriendAction>(
+                  onSelected: (FriendAction result) {
 
-              switch(result) {
-                case FriendAction.profile:
-                  print("PROFILE");
-                  break;
-                case FriendAction.message:
-                  print("Message");
-                  break;
-                case FriendAction.remove:
-                  print("Remove");
-                  break;
-              }
+                    switch(result) {
+                      case FriendAction.profile:
+                        print("PROFILE");
+                        break;
+                      case FriendAction.message:
+                        print("Message");
+                        break;
+                      case FriendAction.remove:
+                        print("Remove");
+                        break;
+                    }
 
 //              setState(() {
 //                _selection = result;
 //              });
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<FriendAction>>[
-              PopupMenuItem<FriendAction>(
-                value: FriendAction.profile,
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      WidgetSpan(
-                          child: Padding(
-                              padding: EdgeInsets.only(right: 10.0),
-                              child: Icon(
-                                Icons.person,
-                              )
+                  },
+                  itemBuilder: (BuildContext context) => <PopupMenuEntry<FriendAction>>[
+                    PopupMenuItem<FriendAction>(
+                      value: FriendAction.profile,
+                      child: RichText(
+                          text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                    child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: Icon(
+                                          Icons.person,
+                                        )
+                                    )
+                                ),
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
+                                  text: "View profile",
+                                ),
+                              ]
                           )
                       ),
-                      TextSpan(
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: 16.0,
-                        ),
-                        text: "View profile",
+                    ),
+                    PopupMenuItem<FriendAction>(
+                      value: FriendAction.message,
+                      child: RichText(
+                          text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                    child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: Icon(
+                                          Icons.message,
+                                        )
+                                    )
+                                ),
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
+                                  text: "Send message",
+                                ),
+                              ]
+                          )
                       ),
-                    ]
-                  )
+                    ),
+                    PopupMenuItem<FriendAction>(
+                      value: FriendAction.remove,
+                      child: RichText(
+                          text: TextSpan(
+                              children: [
+                                WidgetSpan(
+                                    child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: Icon(
+                                          Icons.delete,
+                                        )
+                                    )
+                                ),
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
+                                  text: "Remove",
+                                ),
+                              ]
+                          )
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              PopupMenuItem<FriendAction>(
-                value: FriendAction.message,
-                child: RichText(
-                    text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                              child: Padding(
-                                  padding: EdgeInsets.only(right: 10.0),
-                                  child: Icon(
-                                    Icons.message,
-                                  )
-                              )
-                          ),
-                          TextSpan(
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 16.0,
-                            ),
-                            text: "Send message",
-                          ),
-                        ]
-                    )
-                ),
               ),
-              PopupMenuItem<FriendAction>(
-                value: FriendAction.remove,
-                child: RichText(
-                    text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                              child: Padding(
-                                  padding: EdgeInsets.only(right: 10.0),
-                                  child: Icon(
-                                    Icons.delete,
-                                  )
-                              )
-                          ),
-                          TextSpan(
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 16.0,
-                            ),
-                            text: "Remove",
-                          ),
-                        ]
-                    )
-                ),
-              ),
-            ],
           ),
-        )
-      )
+      ),
     );
+
   }
 
   @override

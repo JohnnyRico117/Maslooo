@@ -675,7 +675,7 @@ class _ProfileState extends State<Profile> {
                   //decoration: BoxDecoration(color: Color.fromRGBO(64, 75, 96, .9)),
                   child: Center(
                     child: ListTile(
-                      onTap: () =>_willComeLater(),
+                      onTap: () => Navigator.pushNamed(context, '/achievements'),
                       contentPadding: EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 0.1),
 //                      leading: Icon(

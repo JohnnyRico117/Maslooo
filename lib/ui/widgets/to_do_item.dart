@@ -308,7 +308,6 @@ class _ToDoItemState extends State<ToDoItem> {
                   status == 3 ? Icon(Icons.cancel, size: 30.0, color: Colors.red,) :
                   Icon(Icons.panorama_fish_eye, size: 30.0),
                 onSelected: (ToDoAction result) {
-
                   switch(result) {
                     case ToDoAction.to_do:
                       setState(() {

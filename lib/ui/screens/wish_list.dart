@@ -99,27 +99,52 @@ class _WishListState extends State<WishList>
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return const Text('Loading....');
-                  return ListView.builder(
-                      padding: const EdgeInsets.all(1.0),
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, i) {
-                        switch(_sortby) {
-                          case 'Alphabet':
-                            snapshot.data.documents.sort((a, b) => a['Task'].toString().toLowerCase().compareTo(b['Task'].toString().toLowerCase()));
-                            break;
-                          case 'Points':
-                          //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
-                            snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
-                            break;
-                          case 'Date':
-                            snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
-                            break;
-                          default:
-                            snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
-                            break;
-                        }
-                        return WishListItem(snapshot.data.documents[i]);
-                    });
+
+                  switch(_sortby) {
+                    case 'Alphabet':
+                      snapshot.data.documents.sort((a, b) => a['Task'].toString().toLowerCase().compareTo(b['Task'].toString().toLowerCase()));
+                      break;
+                    case 'Points':
+                    //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
+                      snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
+                      break;
+                    case 'Date':
+                      snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
+                      break;
+                    default:
+                      snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+                      break;
+                  }
+
+                  return new ListView(
+                    children: snapshot.data.documents
+                        .where((d) => d.data['Status'] != 2)
+                        .map((document) {
+                      return WishListItem(document);
+                    }).toList(),
+                  );
+
+//                  return ListView.builder(
+//                      padding: const EdgeInsets.all(1.0),
+//                      itemCount: snapshot.data.documents.length,
+//                      itemBuilder: (context, i) {
+//                        switch(_sortby) {
+//                          case 'Alphabet':
+//                            snapshot.data.documents.sort((a, b) => a['Task'].toString().toLowerCase().compareTo(b['Task'].toString().toLowerCase()));
+//                            break;
+//                          case 'Points':
+//                          //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
+//                            snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
+//                            break;
+//                          case 'Date':
+//                            snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
+//                            break;
+//                          default:
+//                            snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+//                            break;
+//                        }
+//                        return WishListItem(snapshot.data.documents[i]);
+//                    });
                 },
               ),
             ),

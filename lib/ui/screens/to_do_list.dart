@@ -90,6 +90,32 @@ class _ToDoListState extends State<ToDoList> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return const Text('Loading....');
+
+                  switch(_sortby) {
+                    case 'Alphabet':
+                      snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+                      break;
+                    case 'Points':
+                    //snapshot.data.documents.sort((a, b) => int.parse(a['Points'].toString()).compareTo(int.parse(b['Points'].toString())));
+                      snapshot.data.documents.sort((a, b) => a['Points'].compareTo(b['Points']));
+                      break;
+                    case 'Date':
+                      snapshot.data.documents.sort((a, b) => a['Date'].toString().compareTo(b['Date'].toString()));
+                      break;
+                    default:
+                      snapshot.data.documents.sort((a, b) => a['Task'].toString().compareTo(b['Task'].toString()));
+                      break;
+                  }
+
+                  return new ListView(
+                    children: snapshot.data.documents
+                        .where((d) => d.data['Status'] != 2)
+                        .map((document) {
+                          return ToDoItem(document);
+                        }).toList(),
+                  );
+
+
                   return ListView.builder(
 
                       padding: const EdgeInsets.all(1.0),
